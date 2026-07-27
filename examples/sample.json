@@ -1,0 +1,22 @@
+{
+    "scenes":  [
+                   {
+                       "id":  "1",
+                       "locations":  [
+                                         {
+                                             "name":  "Glass Harbor",
+                                             "description":  "A tidal city"
+                                         }
+                                     ]
+                   },
+                   {
+                       "id":  "2",
+                       "locations":  [
+                                         {
+                                             "name":  "glass harbor",
+                                             "description":  "Lanterns line the quay"
+                                         }
+                                     ]
+                   }
+               ]
+}
