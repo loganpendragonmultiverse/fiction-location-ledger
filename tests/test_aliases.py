@@ -9,7 +9,7 @@ from fiction_location_ledger.core import analyze, render_json, render_markdown
 def test_alias_chain_preserves_evidence_and_first_use():
     data = {
         "scenes": [
-            {"id": "早", "locations": [{"name": "Old Gate", "description": "``` <&>"}]},
+            {"id": "早", "locations": [{"name": "Old Gate", "description": "``` <&>", "scene": "supplied field"}]},
             {"id": "late", "locations": [{"name": "城門", "description": "stone"}]},
         ],
         "aliases": [
@@ -25,6 +25,8 @@ def test_alias_chain_preserves_evidence_and_first_use():
     assert location["first_scene"] == "早"
     assert location["scenes"] == ["早", "late"]
     assert location["observations"][0]["location"]["name"] == "Old Gate"
+    assert location["observations"][0]["scene"] == "早"
+    assert location["observations"][0]["location"]["scene"] == "supplied field"
     assert location["descriptions"] == ["``` <&>", "stone"]
     assert data == original
     assert json.loads(render_json(report)) == report

@@ -71,7 +71,9 @@ def _locations(data: dict[str, Any]) -> dict[str, Any]:
             )
             if "aliases" in data:
                 record["id"] = canonical
-                record.setdefault("observations", []).append({"scene": scene_id, "location": dict(item)})
+                record.setdefault("observations", []).append(
+                    {"scene": scene_id, "location": dict(item)}
+                )
             if scene_id not in record["scenes"]:
                 record["scenes"].append(scene_id)
             description = str(item.get("description", "")).strip()
