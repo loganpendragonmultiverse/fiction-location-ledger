@@ -1,9 +1,17 @@
-# Development contract
+# Development
 
-Collect named fictional locations, first appearances, descriptions, and scene usage.
+Keep this a local, bounded tool for its README purpose. Do not add network lookup,
+telemetry, implicit source modification or unrelated catalog work. Preserve the
+documented legacy report shapes and interpretation limits.
 
-Preserve deterministic, source-safe behavior and the interpretation boundary documented in the README. Every feature release must update tests, version metadata, `CHANGELOG.md`, README claims and limitations, repository metadata, release assets, and the Forge catalog together.
+Run the exact checks in TESTING.md. Changes go through a branch and protected pull
+request with the existing cross-platform CI and CodeQL checks. Review the final
+diff and actual installed distributions before publishing an annotated version tag.
+Use that tag workflow's wheel and source distribution, verify asset SHA-256
+digests, then reconcile the Forge catalog, Gold scope, source-backed information
+page and canonical portfolio record. No release is complete after a push alone.
 
-## Milestone feature contract
+## This patch
 
-Explicit aliases preserve original observations and aggregate canonical usage. Test cycles, dangling targets, duplicate keys, Unicode, legacy output and report fences. No inference or source rewriting.
+- Validate scene and location shapes and reject duplicate scene IDs with actionable input errors.
+- Create reports exclusively, preserving existing files and dangling symlink targets; handle closed output pipes cleanly.
