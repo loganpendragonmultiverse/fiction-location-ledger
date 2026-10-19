@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "fiction-location-ledger"
-version = "1.1.0"
+version = "1.1.1"
 description = "Collect named fictional locations, first appearances, descriptions, and scene usage."
 readme = "README.md"
 requires-python = ">=3.10"
@@ -36,3 +36,7 @@ omit = ["src/*/__main__.py"]
 testpaths = ["tests"]
 addopts = "--cov=fiction_location_ledger --cov-branch --cov-report=term-missing --cov-fail-under=90"
 
+
+[tool.setuptools.data-files]
+"share/fiction-location-ledger" = ["README.md", "DEVELOPMENT.md", "TESTING.md", "CHANGELOG.md", "LICENSE", "CONTRIBUTING.md"]
+"share/fiction-location-ledger/examples" = ["examples/sample.json"]

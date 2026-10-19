@@ -7,11 +7,32 @@ from typing import Any
 PROJECT = "fiction-location-ledger"
 
 
-def _require(data: dict[str, Any], key: str) -> Any:
-    value = data.get(key)
-    if value is None or value == "" or value == []:
-        raise ValueError(f"{key} is required")
-    return value
+def _validate(data: dict[str, Any]) -> None:
+    if not isinstance(data, dict):
+        raise TypeError("input must be an object")
+    scenes = data.get("scenes")
+    if not isinstance(scenes, list) or not scenes:
+        raise ValueError("scenes must be a nonempty list")
+    ids: set[str] = set()
+    for order, scene in enumerate(scenes, 1):
+        if not isinstance(scene, dict):
+            raise TypeError("each scene must be an object")
+        scene_id = scene.get("id", order)
+        if type(scene_id) not in (str, int) or not str(scene_id).strip():
+            raise ValueError("scene IDs must be nonblank strings or integers")
+        if str(scene_id) in ids:
+            raise ValueError("scene IDs must be unique")
+        ids.add(str(scene_id))
+        entries = scene.get("locations", [])
+        if not isinstance(entries, list):
+            raise TypeError("scene locations must be a list")
+        for item in entries:
+            if not isinstance(item, dict):
+                raise TypeError("each location must be an object")
+            if not isinstance(item.get("name"), str) or not item["name"].strip():
+                raise ValueError("locations need nonempty string names")
+            if "description" in item and not isinstance(item["description"], str):
+                raise ValueError("location descriptions must be strings")
 
 
 def _alias_targets(data: dict[str, Any], observed: dict[str, str]) -> dict[str, str]:
@@ -45,7 +66,7 @@ def _alias_targets(data: dict[str, Any], observed: dict[str, str]) -> dict[str, 
 
 
 def _locations(data: dict[str, Any]) -> dict[str, Any]:
-    scenes = _require(data, "scenes")
+    scenes = data["scenes"]
     observed: dict[str, str] = {}
     for scene in scenes:
         for item in scene.get("locations", []):
@@ -83,6 +104,7 @@ def _locations(data: dict[str, Any]) -> dict[str, Any]:
 
 
 def analyze(data: dict[str, Any]) -> dict[str, Any]:
+    _validate(data)
     return {"version": 1, "project": PROJECT, **_locations(data)}
 
 

@@ -1,7 +1,27 @@
 # Testing
 
-Install `.[dev]`, then run `ruff format --check .`, `ruff check .`, `mypy src`, `pytest`, and `python -m build`. Retain the existing coverage gate.
+Requires Python 3.10+. From a clean checkout:
 
-Explicit aliases preserve original observations and aggregate canonical usage. Test cycles, dangling targets, duplicate keys, Unicode, legacy output and report fences.
+```bash
+python -m pip install -e ".[dev]"
+ruff format --check .
+ruff check .
+mypy src
+pytest
+python -m build
+```
 
-Install the built wheel into an isolated environment and exercise the documented CLI before release. Protected cross-platform CI and CodeQL remain required.
+The existing 90% branch-aware coverage floor is retained. CI runs Python 3.10 and
+3.14 on Linux, Windows and macOS. Keep CodeQL and all protected checks required.
+Exercise README examples, malformed inputs, existing files, dangling report
+symlinks, closed stdout, and preservation of source fixtures. Install both the
+tag-built wheel and source distribution in isolation and run the suite plus real
+entrypoint flows away from the source tree. Run pip check. Reports and documents
+must match tagged sources. Tests use synthetic data only.
+
+- Validate scene and location shapes and reject duplicate scene IDs with actionable input errors.
+- Create reports exclusively, preserving existing files and dangling symlink targets; handle closed output pipes cleanly.
+
+Manual screen-reader and physical-device acceptance are not implied by automated
+tests. Folder HTML needs desktop and narrow-viewport browser checks. No full WCAG
+certification or guarantee against concurrent filesystem mutations is claimed.
